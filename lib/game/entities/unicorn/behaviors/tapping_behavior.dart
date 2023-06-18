@@ -5,7 +5,7 @@ import 'package:slappycat/game/game.dart';
 import 'package:slappycat/gen/assets.gen.dart';
 
 class TappingBehavior extends TappableBehavior<Unicorn>
-    with HasGameRef<VeryGoodFlameGame> {
+    with HasGameRef<SlappyCatGame> {
   @override
   bool onTapDown(TapDownInfo info) {
     if (parent.isAnimationPlaying()) {

@@ -1,12 +1,15 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:slappycat/game/game.dart';
+import 'package:slappycat/game/components/box.dart';
+import 'package:slappycat/game/components/spawn_component.dart';
 import 'package:slappycat/l10n/l10n.dart';
 
-class VeryGoodFlameGame extends FlameGame with HasTappables {
-  VeryGoodFlameGame({
+class SlappyCatGame extends FlameGame {
+  SlappyCatGame({
     required this.l10n,
     required this.effectPlayer,
   }) {
@@ -18,15 +21,43 @@ class VeryGoodFlameGame extends FlameGame with HasTappables {
   final AudioPlayer effectPlayer;
 
   int counter = 0;
+  final int maxElement = 3;
+  final world = World();
+  late CameraComponent cameraComponent;
+
+  final random = Random();
 
   @override
-  Color backgroundColor() => const Color(0xFF2A48DF);
+  Color backgroundColor() => const Color.fromARGB(255, 38, 34, 52);
 
   @override
   Future<void> onLoad() async {
-    camera.zoom = 8;
+    cameraComponent = CameraComponent.withFixedResolution(
+      world: world,
+      width: 300,
+      height: 800,
+    );
 
-    await add(CounterComponent(position: (size / 2)..sub(Vector2(0, 16))));
-    await add(Unicorn(position: size / 2));
+    await addAll(
+      [
+        cameraComponent,
+        world,
+        SpawnComponent(
+          period: 3,
+        ),
+      ],
+    );
+  }
+
+  void addBox() {
+    if (counter < maxElement) {
+      add(MyBox(gridPosition: Vector2.random()));
+      counter++;
+    }
+  }
+
+  void removeBox(MyBox box) {
+    remove(box);
+    counter--;
   }
 }

@@ -46,7 +46,7 @@ class _GameViewState extends State<GameView> {
   void initState() {
     super.initState();
     bgm = context.read<AudioCubit>().bgm;
-    bgm.play(Assets.audio.background);
+    //bgm.play(Assets.audio.background);
   }
 
   @override
@@ -58,7 +58,7 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     _game ??= widget.game ??
-        VeryGoodFlameGame(
+        SlappyCatGame(
           l10n: context.l10n,
           effectPlayer: context.read<AudioCubit>().effectPlayer,
         );

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:slappycat/game/game.dart';
 
 class CounterComponent extends PositionComponent
-    with HasGameRef<VeryGoodFlameGame> {
+    with HasGameRef<SlappyCatGame> {
   CounterComponent({
     required super.position,
   }) : super(anchor: Anchor.center);

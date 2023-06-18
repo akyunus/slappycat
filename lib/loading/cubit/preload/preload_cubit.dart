@@ -32,7 +32,7 @@ class PreloadCubit extends Cubit<PreloadState> {
       // Throttle phases to take at least 1/5 seconds
       await Future.wait([
         Future.delayed(Duration.zero, phase.start),
-        Future<void>.delayed(const Duration(milliseconds: 200)),
+        Future<void>.delayed(const Duration(milliseconds: 1000)),
       ]);
       emit(state.copyWith(loadedCount: state.loadedCount + 1));
     }

@@ -39,7 +39,7 @@ class Unicorn extends PositionedEntity with HasGameRef {
     );
 
     resetAnimation();
-    animation.onComplete = resetAnimation;
+    //animation.onComplete = resetAnimation;
 
     await add(SpriteAnimationComponent(animation: _animation, size: size));
   }
@@ -47,15 +47,12 @@ class Unicorn extends PositionedEntity with HasGameRef {
   /// Set the animation to the first frame by tricking the animation
   /// into thinking it finished the last frame.
   void resetAnimation() {
-    animation
-      ..currentIndex = _animation!.frames.length - 1
-      ..update(0.1)
-      ..currentIndex = 0;
+  
   }
 
   /// Plays the animation.
-  void playAnimation() => animation.reset();
+  void playAnimation() {}
 
   /// Returns whether the animation is playing or not.
-  bool isAnimationPlaying() => !animation.isFirstFrame;
+  bool isAnimationPlaying() => true;
 }

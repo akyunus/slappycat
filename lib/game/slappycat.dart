@@ -49,15 +49,15 @@ class SlappyCatGame extends FlameGame {
     );
   }
 
-  void addBox() {
+  void addComponent() {
     if (counter < maxElement) {
       add(MyBox(gridPosition: Vector2.random()));
       counter++;
     }
   }
 
-  void removeBox(MyBox box) {
-    remove(box);
+  void removeComponent(Component component) {
+    remove(component);
     counter--;
   }
 }

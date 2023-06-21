@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
@@ -10,43 +8,30 @@ import 'package:flutter/material.dart';
 import 'package:slappycat/game/game.dart';
 import 'package:slappycat/gen/assets.gen.dart';
 
-class MyBox extends SpriteComponent
+class Mover extends PositionComponent
     with HasGameRef<SlappyCatGame>, TapCallbacks {
-  MyBox({
-    required this.gridPosition,
+  Mover({
+    required this.initialPosition,
   }) : super(size: Vector2.all(64), anchor: Anchor.center);
 
-  final Vector2 gridPosition;
+  final Vector2 initialPosition;
   late Vector2 velocity;
   late final Timer selfDestruction;
   @override
   Future<void> onLoad() async {
-    sprite = await gameRef.loadSprite(Assets.images.reddot.path);
-    position = gridPosition;
-    velocity = Vector2.random() * 50;
-    selfDestruction = Timer(16, onTick: () {
-      gameRef.effectPlayer.play(AssetSource(Assets.audio.drop003));
-      gameRef.removeComponent(this);
-    });
-    /*
-    add(
-      MoveEffect.to(
-        Vector2(380, 50),
-        EffectController(
-          duration: 3,
-          reverseDuration: 3,
-          infinite: true,
-          curve: Curves.easeOut,
-        ),
-      ),
+    position = initialPosition;
+    selfDestruction = Timer(
+      7,
+      onTick: () {
+        gameRef.effectPlayer.play(AssetSource(Assets.audio.drop003));
+        gameRef.removeComponent(this);
+      },
     );
-    */
-    print("size.x ${game.size.x}");
-    print(game.size.y);
+
     final paths = List<double>.generate(
       12,
       (i) {
-        return (i % 2 == 0)
+        return (i.isEven)
             ? gameRef.random.nextInt(gameRef.size.x.toInt()).toDouble()
             : gameRef.random.nextInt(game.size.y.toInt()).toDouble();
       },
@@ -73,24 +58,21 @@ class MyBox extends SpriteComponent
             paths.elementAt(11),
           ),
         EffectController(
-          duration: 13,
-          curve: Curves.elasticInOut,
+          duration: 7,
+          curve: Curves.easeOut,
         ),
       ),
     );
-    gameRef.effectPlayer.play(AssetSource(Assets.audio.drop004));
   }
 
   @override
   void update(double dt) {
     super.update(dt);
     selfDestruction.update(dt);
-    position.add(velocity * dt);
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    // TODO: implement onTapDown
     super.onTapDown(event);
 
     addExplosion();
@@ -110,21 +92,27 @@ class MyBox extends SpriteComponent
   }
 
   void addExplosion() {
-    game.add(ParticleSystemComponent(
+    game.add(
+      ParticleSystemComponent(
         particle: Particle.generate(
-            count: 50,
-            generator: (i) {
-              Vector2 position = this.position;
-              Vector2 speed = Vector2.zero();
-              final acceleration = randomVector2();
-              final paint = Paint()..color = randomColor();
-              final radius = game.random.nextInt(6).toDouble();
-              return ComputedParticle(renderer: (canvas, _) {
+          count: 50,
+          generator: (i) {
+            Vector2 position = this.position;
+            var speed = Vector2.zero();
+            final acceleration = randomVector2();
+            final paint = Paint()..color = randomColor();
+            final radius = game.random.nextInt(6).toDouble();
+            return ComputedParticle(
+              renderer: (canvas, _) {
                 speed += acceleration;
                 position += speed;
                 canvas.drawCircle(
                     Offset(position.x, position.y), radius, paint);
-              });
-            })));
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }

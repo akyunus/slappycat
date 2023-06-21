@@ -19,6 +19,6 @@ class SpawnComponent extends TimerComponent with HasGameRef<SlappyCatGame> {
   @override
   void onTick() {
     super.onTick();
-    gameRef.addBox();
+    gameRef.addComponent();
   }
 }

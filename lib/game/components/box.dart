@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
@@ -21,11 +20,27 @@ class MyBox extends SpriteComponent
   @override
   Future<void> onLoad() async {
     sprite = await gameRef.loadSprite(Assets.images.reddot.path);
-    position = gridPosition;
+    
+    size = Vector2.all(32);
+    final paths = List<double>.generate(
+      12,
+      (i) {
+        return (i.isEven)
+            ? gameRef.random.nextInt(gameRef.size.x.toInt()).toDouble() - 100
+            : gameRef.random.nextInt(game.size.y.toInt()).toDouble() - 100;
+      },
+    );
+
+    position = Vector2(
+      paths.elementAt(0),
+      paths.elementAt(1),
+    );
     velocity = Vector2.random() * 50;
-    selfDestruction = Timer(16, onTick: () {
-      gameRef.effectPlayer.play(AssetSource(Assets.audio.drop003));
-      gameRef.removeComponent(this);
+    selfDestruction = Timer(
+      8,
+      onTick: () {
+        gameRef.effectPlayer.play(AssetSource(Assets.audio.drop003));
+        gameRef.removeComponent(this);
       },
     );
     /*
@@ -41,20 +56,13 @@ class MyBox extends SpriteComponent
       ),
     );
     */
-    final paths = List<double>.generate(
-      12,
-      (i) {
-        return (i.isEven)
-            ? gameRef.random.nextInt(gameRef.size.x.toInt()).toDouble()
-            : gameRef.random.nextInt(game.size.y.toInt()).toDouble();
-      },
-    );
+
     add(
       MoveAlongPathEffect(
         Path()
           ..quadraticBezierTo(
-            0,
-            0,
+            paths.elementAt(0),
+            paths.elementAt(1),
             paths.elementAt(2),
             paths.elementAt(3),
           )
@@ -71,8 +79,8 @@ class MyBox extends SpriteComponent
             paths.elementAt(11),
           ),
         EffectController(
-          duration: 13,
-          curve: Curves.elasticInOut,
+          duration: 7,
+          curve: Curves.easeInOutCubic,
         ),
       ),
     );
@@ -100,22 +108,24 @@ class MyBox extends SpriteComponent
     return Color.fromRGBO(
       game.random.nextInt(100) + 155,
       game.random.nextInt(100),
-      game.random.nextInt(50),
+      game.random.nextInt(10),
       game.random.nextInt(50) + 50 / 100,
     );
   }
 
   void addExplosion() {
-    game.add(ParticleSystemComponent(
+    game.add(
+      ParticleSystemComponent(
         particle: Particle.generate(
-            count: 50,
-            generator: (i) {
-              Vector2 position = this.position;
+          count: 50,
+          generator: (i) {
+            Vector2 position = this.position;
             var speed = Vector2.zero();
-              final acceleration = randomVector2();
-              final paint = Paint()..color = randomColor();
-              final radius = game.random.nextInt(6).toDouble();
-              return ComputedParticle(renderer: (canvas, _) {
+            final acceleration = randomVector2();
+            final paint = Paint()..color = randomColor();
+            final radius = game.random.nextInt(6).toDouble();
+            return ComputedParticle(
+              renderer: (canvas, _) {
                 speed += acceleration;
                 position += speed;
                 canvas.drawCircle(

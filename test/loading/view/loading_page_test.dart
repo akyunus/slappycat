@@ -69,10 +69,10 @@ void main() {
       await tester.pump();
 
       expect(textWidgetFinder().data, 'Loading Delightful music...');
-      await tester.pump(const Duration(milliseconds: 200));
+      await tester.pump(const Duration(milliseconds: 1200));
 
       expect(textWidgetFinder().data, 'Loading Beautiful scenery...');
-      await tester.pump(const Duration(milliseconds: 200));
+      await tester.pump(const Duration(milliseconds: 1200));
 
       /// flush animation timers
       await tester.pumpAndSettle();
@@ -91,7 +91,7 @@ void main() {
 
       unawaited(preloadCubit.loadSequentially());
 
-      await tester.pump(const Duration(milliseconds: 800));
+      await tester.pump(const Duration(milliseconds: 1800));
 
       await tester.pumpAndSettle();
 

@@ -3,7 +3,6 @@ import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slappycat/game/game.dart';
-import 'package:slappycat/gen/assets.gen.dart';
 import 'package:slappycat/l10n/l10n.dart';
 import 'package:slappycat/loading/cubit/cubit.dart';
 

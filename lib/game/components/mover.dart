@@ -107,7 +107,7 @@ class Mover extends PositionComponent
                 speed += acceleration;
                 position += speed;
                 canvas.drawCircle(
-                    Offset(position.x, position.y), radius, paint);
+                    Offset(position.x, position.y), radius, paint,);
               },
             );
           },

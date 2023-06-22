@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -27,7 +26,8 @@ class MyBox extends SpriteComponent
     selfDestruction = Timer(16, onTick: () {
       gameRef.effectPlayer.play(AssetSource(Assets.audio.drop003));
       gameRef.removeComponent(this);
-    });
+      },
+    );
     /*
     add(
       MoveEffect.to(
@@ -41,12 +41,10 @@ class MyBox extends SpriteComponent
       ),
     );
     */
-    print("size.x ${game.size.x}");
-    print(game.size.y);
     final paths = List<double>.generate(
       12,
       (i) {
-        return (i % 2 == 0)
+        return (i.isEven)
             ? gameRef.random.nextInt(gameRef.size.x.toInt()).toDouble()
             : gameRef.random.nextInt(game.size.y.toInt()).toDouble();
       },
@@ -78,7 +76,7 @@ class MyBox extends SpriteComponent
         ),
       ),
     );
-    gameRef.effectPlayer.play(AssetSource(Assets.audio.drop004));
+    await gameRef.effectPlayer.play(AssetSource(Assets.audio.drop004));
   }
 
   @override
@@ -90,9 +88,7 @@ class MyBox extends SpriteComponent
 
   @override
   void onTapDown(TapDownEvent event) {
-    // TODO: implement onTapDown
     super.onTapDown(event);
-
     addExplosion();
     gameRef.effectPlayer.play(AssetSource(Assets.audio.drop002));
     gameRef.removeComponent(this);
@@ -115,7 +111,7 @@ class MyBox extends SpriteComponent
             count: 50,
             generator: (i) {
               Vector2 position = this.position;
-              Vector2 speed = Vector2.zero();
+            var speed = Vector2.zero();
               final acceleration = randomVector2();
               final paint = Paint()..color = randomColor();
               final radius = game.random.nextInt(6).toDouble();
@@ -123,8 +119,15 @@ class MyBox extends SpriteComponent
                 speed += acceleration;
                 position += speed;
                 canvas.drawCircle(
-                    Offset(position.x, position.y), radius, paint);
-              });
-            })));
+                  Offset(position.x, position.y),
+                  radius,
+                  paint,
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }

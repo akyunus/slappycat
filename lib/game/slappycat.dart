@@ -5,6 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:slappycat/game/components/box.dart';
+import 'package:slappycat/game/components/box2.dart';
 import 'package:slappycat/game/components/butterfly.dart';
 import 'package:slappycat/game/components/spawn_component.dart';
 import 'package:slappycat/l10n/l10n.dart';
@@ -46,14 +47,14 @@ class SlappyCatGame extends FlameGame {
         SpawnComponent(
           period: 3,
         ),
-        Butterfly(),
+        
       ],
     );
   }
 
   void addComponent() {
     if (counter < maxElement) {
-      add(MyBox(gridPosition: Vector2.random()));
+      add(Butterfly(initialPosition: Vector2.random()));
       counter++;
     }
   }

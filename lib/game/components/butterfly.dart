@@ -1,28 +1,30 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:slappycat/game/game.dart';
+import 'package:slappycat/game/components/mover.dart';
 import 'package:slappycat/gen/assets.gen.dart';
 
-class Butterfly extends PositionComponent with HasGameRef<SlappyCatGame> {
+class Butterfly extends Mover {
+  Butterfly({required super.initialPosition});
+
   SpriteAnimation? _animation;
 
   SpriteAnimation get animation => _animation!;
   @override
   Future<void> onLoad() async {
-    position = Vector2.all(100);
+   
+
     _animation = await gameRef.loadSpriteAnimation(
-      Assets.images.unicornAnimation.path,
+      Assets.images.butterfly12.path,
       SpriteAnimationData.sequenced(
-        amount: 16,
-        stepTime: 0.1,
-        textureSize: Vector2.all(32),
+        amount: 27,
+        stepTime: 0.02,
+        textureSize: Vector2(244, 164),
       ),
     );
+    component =
+        SpriteAnimationComponent(animation: _animation, size: Vector2.all(64));
 
-    await add(
-      SpriteAnimationComponent(animation: _animation, size: Vector2.all(64)),
-    );
     return super.onLoad();
   }
 }

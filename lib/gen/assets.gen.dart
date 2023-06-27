@@ -38,15 +38,15 @@ class $AssetsAudioGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/butterfly12.png
+  AssetGenImage get butterfly12 =>
+      const AssetGenImage('assets/images/butterfly12.png');
+
   /// File path: assets/images/reddot.png
   AssetGenImage get reddot => const AssetGenImage('assets/images/reddot.png');
 
-  /// File path: assets/images/unicorn_animation.png
-  AssetGenImage get unicornAnimation =>
-      const AssetGenImage('assets/images/unicorn_animation.png');
-
   /// List of all assets
-  List<AssetGenImage> get values => [reddot, unicornAnimation];
+  List<AssetGenImage> get values => [butterfly12, reddot];
 }
 
 class $AssetsLicensesGen {

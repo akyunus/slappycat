@@ -12,11 +12,13 @@ class Mover extends PositionComponent
     with HasGameRef<SlappyCatGame>, TapCallbacks {
   Mover({
     required this.initialPosition,
+    
   }) : super(size: Vector2.all(64), anchor: Anchor.center);
 
   final Vector2 initialPosition;
   late Vector2 velocity;
   late final Timer selfDestruction;
+  late Component component;
   @override
   Future<void> onLoad() async {
     position = initialPosition;
@@ -36,6 +38,7 @@ class Mover extends PositionComponent
             : gameRef.random.nextInt(game.size.y.toInt()).toDouble();
       },
     );
+    add(component);
     add(
       MoveAlongPathEffect(
         Path()
@@ -107,7 +110,10 @@ class Mover extends PositionComponent
                 speed += acceleration;
                 position += speed;
                 canvas.drawCircle(
-                    Offset(position.x, position.y), radius, paint,);
+                  Offset(position.x, position.y),
+                  radius,
+                  paint,
+                );
               },
             );
           },

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:slappycat/game/game.dart';
 import 'package:slappycat/gen/assets.gen.dart';
 
-class Mover extends PositionComponent
+abstract class Mover extends PositionComponent
     with HasGameRef<SlappyCatGame>, TapCallbacks {
   Mover({
     required this.initialPosition,

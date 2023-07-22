@@ -1,0 +1,29 @@
+# dart run icons_launcher:create
+
+icons_launcher:
+  image_path: "assets/paw_logo.png"
+  platforms:
+    android:
+      enable: true
+      image_path: "assets/paw_logo.png"
+      adaptive_background_color: '#fafbfc'
+      #adaptive_background_image: "assets/paw_logo_background.png"
+      adaptive_foreground_image: "assets/paw_logo_foreground.png"
+      adaptive_round_image: "assets/paw_logo_round.png"
+      adaptive_monochrome_image: "assets/paw_logo_monochrome.png"
+    ios:
+      enable: false
+      image_path: "assets/paw_logo.png"
+    web:
+      enable: false
+      image_path: "assets/paw_logo.png"
+      favicon_path: "assets/paw_logo.png"
+    macos:
+      enable: false
+      image_path: "assets/paw_logo.png"
+    windows:
+      enable: false
+      image_path: "assets/paw_logo.png"
+    linux:
+      enable: false
+      image_path: "assets/paw_logo.png"

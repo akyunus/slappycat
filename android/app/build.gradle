@@ -62,19 +62,25 @@ android {
 
     signingConfigs {
         if (System.getenv("ANDROID_KEYSTORE_PATH")) {
-            release {
+            productionRelease {
                 storeFile file(System.getenv("ANDROID_KEYSTORE_PATH"))
                 keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
                 keyPassword System.getenv("ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
                 storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
             }
         } else {
-            release {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-                storePassword keystoreProperties['storePassword']
+            productionRelease {
+                keyAlias keystoreProperties['productionKeyAlias']
+                keyPassword keystoreProperties['productionkeyPassword']
+                storeFile keystoreProperties['productionStoreFile'] ? file(keystoreProperties['storeFile']) : null
+                storePassword keystoreProperties['productionStorePassword']
             }
+        }
+        stagingRelease {
+            storeFile file(keystoreProperties['stagingStoreFile'])
+            storePassword keystoreProperties['stagingStorePassword']
+            keyAlias keystoreProperties['stagingKeyAlias']
+            keyPassword keystoreProperties['stagingKeyPassword']
         }
     }
 
@@ -98,8 +104,13 @@ android {
     }
 
     buildTypes {
-        release {
-            signingConfig signingConfigs.release
+        productionRelease {
+            signingConfig signingConfigs.productionRelease
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+        stagingRelease {
+            signingConfig signingConfigs.stagingRelease
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }

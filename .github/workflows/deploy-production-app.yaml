@@ -8,6 +8,7 @@ jobs:
   gitRelease:
     name: Create git release for Prod app
     runs-on: ubuntu-latest
+    environment: 'Android Production'
     outputs:
       new_pubspec_version: "${{ steps.get_new_pubspec_version.outputs.next_pubspec_version }}"
     steps:

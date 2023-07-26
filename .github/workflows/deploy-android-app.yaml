@@ -68,7 +68,11 @@ jobs:
           sed -Ei "s/^version: (.*)/version: ${{ inputs.new-pubspec-version }}/" pubspec.yaml
       - name: ⚙️ Install dependencies
         run: |
+          echo Current path
+          pwd
           pushd ${{ github.workspace }}
+          echo Current path
+          pwd
           flutter pub get
       - name: 🤖📦 Create Android ${{ inputs.short-environment-name }} appbundle release
         run: |

@@ -7,7 +7,15 @@
 		"context": "..",
 		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
 		"dockerfile": "../Dockerfile"
-	}
+	},
+	"privileged": true,
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "/dev/bus/usb",
+            "target": "/dev/bus/usb"
+        }
+    ]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
